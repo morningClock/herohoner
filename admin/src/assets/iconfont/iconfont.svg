@@ -1,0 +1,29 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >
+<!--
+2013-9-30: Created.
+-->
+<svg>
+<metadata>
+Created by iconfont
+</metadata>
+<defs>
+
+<font id="iconfont" horiz-adv-x="1024" >
+  <font-face
+    font-family="iconfont"
+    font-weight="500"
+    font-stretch="normal"
+    units-per-em="1024"
+    ascent="896"
+    descent="-128"
+  />
+    <missing-glyph />
+    
+    <glyph glyph-name="lashen" unicode="&#59026;" d="M434 682c17.674 0 32-14.326 32-32v-533.334c0-17.672-14.326-32-32-32s-32 14.328-32 32V650c0 17.674 14.326 32 32 32z m158 0c17.674 0 32-14.326 32-32v-533.334c0-17.672-14.326-32-32-32s-32 14.328-32 32V650c0 17.674 14.326 32 32 32z"  horiz-adv-x="1026" />
+
+    
+
+
+  </font>
+</defs></svg>

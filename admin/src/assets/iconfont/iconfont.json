@@ -1,0 +1,16 @@
+{
+  "id": "1483479",
+  "name": "herohoner",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "10222241",
+      "name": "拉伸",
+      "font_class": "lashen",
+      "unicode": "e692",
+      "unicode_decimal": 59026
+    }
+  ]
+}
