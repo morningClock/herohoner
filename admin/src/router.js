@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Main from './views/Main.vue'
-// import Home from './views/Home.vue'
+import CategoryEdit from './views/CategoryEdit.vue'
+import CategoryList from './views/CategoryList.vue'
 
 Vue.use(Router)
 
@@ -10,7 +11,14 @@ export default new Router({
     {
       path: '/',
       name: 'main',
-      component: Main
+      component: Main,
+      children: [
+        { path: '/categories/create', component: CategoryEdit },
+        // 注入url参数进入该组件
+        { path: '/categories/edit/:id', component: CategoryEdit, props: true },
+        { path: '/categories/list', component: CategoryList }
+      ]
     }
+    
   ]
 })
