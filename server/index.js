@@ -10,7 +10,7 @@ const app = express()
 
 // 解决跨域问题
 app.use(require('cors')())
-// 使用异步json回调
+// 可以返回json格式的数据给前端
 app.use(express.json())
 
 // 引入admin接口,传入express对象
