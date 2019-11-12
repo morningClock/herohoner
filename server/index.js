@@ -19,6 +19,9 @@ require('./routes/admin')(app)
 // 引入db
 require('./plugins/db')(app)
 
+// 开放静态资源
+app.use('/uploads',express.static(__dirname+'/uploads'))
+
 app.listen(3000, () => {
   console.log('http://localhost:3000')
 })
