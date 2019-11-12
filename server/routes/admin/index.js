@@ -36,7 +36,7 @@ module.exports = app => {
    */
   router.get('/', async(req, res) => {
     const queryOptions = {}
-    if(req.Model.modelName === 'Category') {
+    if(req.Model.modelName === 'Category'||'Hero') {
       queryOptions.populate = 'parent'
     }
     // populate关联字段
