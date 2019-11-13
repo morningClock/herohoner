@@ -35,8 +35,9 @@ module.exports = app => {
    * 获取分类列表
    */
   router.get('/', async(req, res) => {
+    // 查找上级分类时才使用populate
     const queryOptions = {}
-    if(req.Model.modelName === 'Category'||'Hero') {
+    if(req.Model.modelName === 'Category') {
       queryOptions.populate = 'parent'
     }
     // populate关联字段
