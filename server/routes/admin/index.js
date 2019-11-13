@@ -40,6 +40,9 @@ module.exports = app => {
     if(req.Model.modelName === 'Category') {
       queryOptions.populate = 'parent'
     }
+    else if(req.Model.modelName === 'Article') {
+      queryOptions.populate = 'categories'
+    }
     // populate关联字段
     // populate指定的字段会继续找到指定的字段它的model对象
     const items = await req.Model.find().setOptions(queryOptions).limit(10)
