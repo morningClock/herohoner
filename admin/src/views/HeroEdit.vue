@@ -8,6 +8,7 @@
             <el-upload
               class="avatar-uploader"
               :show-file-list="false"
+              :headers="getAuthHeader()"
               :action="$http.defaults.baseURL + '/upload'"
               :on-success="afterUpload"
               :before-upload="beforeUpload">
@@ -159,17 +160,16 @@ export default {
     async save () {
       if (this.id) {
         // 编辑
-        console.log(this.model)
         await this.$http.put(`rest/heroes/${this.id}`, this.model)
       } else {
         // 新建
         await this.$http.post('rest/heroes', this.model)
       }
-      this.$router.push('/heroes/list')
       this.$message({
         type: 'success',
         message: '保存成功'
       })
+      this.$router.push('/heroes/list')
     },
     async fetchDetail () {
       // 获取详情
@@ -205,29 +205,7 @@ export default {
 }
 </script>
 
-<style>
-  .avatar-uploader .el-upload {
-    border: 1px dashed #d9d9d9;
-    border-radius: 6px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-  }
-  .avatar-uploader .el-upload:hover {
-    border-color: #409EFF;
-  }
-  .avatar-uploader-icon {
-    font-size: 28px;
-    color: #8c939d;
-    width: 178px;
-    height: 178px;
-    line-height: 178px;
-    text-align: center;
-  }
-  .avatar {
-    height: 178px;
-    display: block;
-  }
+<style scoped>
   .box-card {
     margin: 5px;
   }

@@ -1,6 +1,7 @@
 module.exports = app => {
   const mongoose = require('mongoose')
-  mongoose.connect('mongodb://127.0.0.1:27017/herohoner', {
+  const keys = require('../config/keys')
+  mongoose.connect(keys.database, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false

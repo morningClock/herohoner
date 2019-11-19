@@ -1,19 +1,15 @@
 <template>
   <div>
-    <h1>{{id? '编辑': '新建'}}分类</h1>
+    <h1>{{id? '编辑': '新建'}}管理员</h1>
     <el-form label-width="120px" @submit.native="save">
-      <el-form-item label="上级分类">
-        <el-select v-model="model.parent" clearable placeholder="上级分类">
-          <el-option
-            v-for="item in parents"
-            :key="item._id"
-            :label="item.name"
-            :value="item._id"
-          ></el-option>
-        </el-select>
+      <el-form-item label="账号">
+        <el-input v-model="model.username"></el-input>
       </el-form-item>
       <el-form-item label="名称">
         <el-input v-model="model.name"></el-input>
+      </el-form-item>
+      <el-form-item label="密码">
+        <el-input v-model="model.password"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" native-type="submit">保存</el-button>
@@ -30,36 +26,30 @@ export default {
   data () {
     return {
       model: {},
-      parents: []
     }
   },
   methods: {
     async save () {
       if (this.id) {
         // 编辑
-        await this.$http.put(`rest/categories/${this.id}`, this.model)
+        await this.$http.put(`rest/admin_users/${this.id}`, this.model)
       } else {
         // 新建
-        await this.$http.post('rest/categories', this.model)
+        await this.$http.post('rest/admin_users', this.model)
       }
       this.$message({
         type: 'success',
         message: '保存成功'
       })
-      this.$router.push('/categories/list')
+      this.$router.push('/admin_users/list')
     },
     async fetchDetail () {
       // 获取详情
-      const res = await this.$http.get(`rest/categories/${this.id}`)
+      const res = await this.$http.get(`rest/admin_users/${this.id}`)
       this.model = res.data
-    },
-    async fetchParents () {
-      const res = await this.$http.get(`rest/categories`)
-      this.parents = res.data
     }
   },
   created () {
-    this.fetchParents()
     this.id && this.fetchDetail()
   }
 }

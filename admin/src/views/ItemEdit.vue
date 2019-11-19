@@ -9,6 +9,7 @@
         <el-upload
           class="avatar-uploader"
           :show-file-list="false"
+          :headers="getAuthHeader()"
           :action="$http.defaults.baseURL + '/upload'"
           :on-success="afterUpload"
           :before-upload="beforeUpload">
@@ -42,11 +43,11 @@ export default {
         // 新建
         await this.$http.post('rest/items', this.model)
       }
-      this.$router.push('/items/list')
       this.$message({
         type: 'success',
         message: '保存成功'
       })
+      this.$router.push('/items/list')
     },
     async fetchDetail () {
       // 获取详情
@@ -66,28 +67,3 @@ export default {
   }
 }
 </script>
-
-<style>
-  .avatar-uploader .el-upload {
-    border: 1px dashed #d9d9d9;
-    border-radius: 6px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-  }
-  .avatar-uploader .el-upload:hover {
-    border-color: #409EFF;
-  }
-  .avatar-uploader-icon {
-    font-size: 28px;
-    color: #8c939d;
-    width: 178px;
-    height: 178px;
-    line-height: 178px;
-    text-align: center;
-  }
-  .avatar {
-    height: 178px;
-    display: block;
-  }
-</style>

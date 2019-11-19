@@ -26,6 +26,7 @@
           id="quillUploader"
           style="display: none"
           :show-file-list="false"
+          :headers="getAuthHeader()"
           :action="$http.defaults.baseURL + '/upload'"
           :on-success="uploadQuillImage">
         </el-upload>
@@ -96,11 +97,11 @@ export default {
         // 新建
         await this.$http.post('rest/articles', this.model)
       }
-      this.$router.push('/articles/list')
       this.$message({
         type: 'success',
         message: '保存成功'
       })
+      this.$router.push('/articles/list')
     },
     async fetchDetail () {
       // 获取详情
@@ -136,11 +137,8 @@ export default {
 }
 </script>
 
-<style scope>
+<style scoped>
 .quill-editor{
-  line-height: 1.42;
-}
-.ql-container{
-  height: 200px;
+  line-height: 1.42 !important;
 }
 </style>
