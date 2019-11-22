@@ -104,6 +104,7 @@
                 <el-upload
                   class="avatar-uploader"
                   :show-file-list="false"
+                  :headers="getAuthHeader()"
                   :action="$http.defaults.baseURL + '/upload'"
                   :on-success="res => $set(item, 'icon', res.url)"
                   :before-upload="beforeUpload">
