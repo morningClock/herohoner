@@ -9,10 +9,14 @@
         <el-button
           type="primary"
           plain
-          @click="model.items.push({})">
+          @click="model.items.push({})"
+        >
           添加图片
         </el-button>
-        <div v-for="(ad, index) of model.items" :key="'ad'+ index">
+      <div
+        v-for="(ad, index) of model.items"
+        :key="'ad'+ index"
+      >
           <el-card class="box-card">
             <div slot="header" class="clearfix">
               <span style="font-weight: 700">图片{{index+1}}</span>

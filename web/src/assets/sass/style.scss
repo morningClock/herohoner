@@ -1,0 +1,180 @@
+// 被包含文件_开头自动省略
+@import './variable';
+
+/* Reset CSS */
+* {
+  // 防止padding撑大盒子
+  box-sizing: border-box;
+  // 避免边框高亮，影响风格
+  outline: none;
+}
+
+html {
+  // 以13为基准
+  font-size: 13px;
+}
+
+body {
+  margin: 0;
+  background: #f1f1f1;
+  // 设置可继承属性
+  // em相对于父级元素的font-size
+  line-height: 1.2em;
+  font-size: 0.9231rem;
+  font-family: Arial, Helvetica, sans-serif;
+  // 苹果字体平滑
+  -webkit-font-smoothing: antialiased;
+}
+
+@media only screen and (min-width: 377px) {
+  body {
+    width: 375px;
+    margin: 0 auto;
+  }
+}
+
+/* 
+  网站基调 
+  确定网站的主色调，配色
+*/
+
+// 文本以及背景颜色
+@each $colorName,$color in $colors {
+  .text-#{$colorName} {
+    color: $color
+  }
+
+  .bg-#{$colorName} {
+    background-color: $color
+  }
+}
+
+// 文本对齐
+@each $var in (left, center, right) {
+  .text-#{$var} {
+    text-align: $var;
+  }
+}
+
+// 文本字体尺寸
+@each $sizeName,
+$size in $font-sizes {
+  .fs-#{$sizeName} {
+    font-size: $size * $base-font-size;
+  }
+}
+
+/* 
+  Flex布局
+  移动端常用布局
+*/
+.d-flex {
+  display: flex;
+}
+
+// justify-content
+$flex-jc: ('start': flex-start,
+  'end': flex-end,
+  'center': center,
+  'between': space-between,
+  'around': space-around
+);
+
+@each $key,
+$value in $flex-jc {
+  .jc-#{$key} {
+    justify-content: $value;
+  }
+}
+
+// align-items
+$flex-ai: (
+  'start': flex-start,
+  'end': flex-end,
+  'center': center,
+  'stretch': stretch,
+  'baseline': baseline
+);
+
+@each $key,
+$value in $flex-ai {
+  .ai-#{$key} {
+    align-items: $value;
+  }
+}
+
+// flex-direction
+.flex-col {
+  flex-direction: column;
+}
+
+// flex-wrap
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+// flex-grow 
+.flex-1 {
+  flex-grow: 1;
+}
+
+
+/* 
+  边距定义
+  类似于bootstrap根据级别安排边距
+ */
+$spaces-types: (
+  m: margin,
+  p: padding
+);
+$spaces-directions: (
+  t: top,
+  r: right,
+  b: bottom,
+  l: left
+);
+
+// margin padding 五个level的宽度设置
+@each $typeKey,$type in $spaces-types {
+  @each $sizeKey,$size in $spaces-sizes {
+    // m-level 环绕
+    .#{$typeKey}-#{$sizeKey} {
+      #{$type}: $size * $spaces-base-size;
+    }
+    // mx-level my-level 水平或垂直
+    .#{$typeKey}x-#{$sizeKey} {
+      #{$type}-left: $size * $spaces-base-size;
+      #{$type}-right: $size * $spaces-base-size;
+    }
+    .#{$typeKey}y-#{$sizeKey} {
+      #{$type}-top: $size * $spaces-base-size;
+      #{$type}-bottom: $size * $spaces-base-size;
+    }
+    // mt-level 单边
+    @each $directionKey,$direction in $spaces-directions { 
+      .#{$typeKey}#{$directionKey}-#{$sizeKey} {
+        #{$type}-#{$direction}: $size * $spaces-base-size;
+      }
+    }
+  }
+}
+
+/* button按钮 */
+.btn{
+  border: none;
+  border-radius: 0.1538rem;
+  // 取定义的字号中的sm字号
+  font-size: map-get($font-sizes , 'sm') * $base-font-size;
+  padding: 0.25rem 0.6rem;
+}
+
+.nav{
+  .nav-item{
+    margin-bottom: .25rem;
+    &.active .nav-link{
+      width: 100%;
+      height: 100%;
+      border-bottom: 3px solid #fff;
+    }
+  }
+}
