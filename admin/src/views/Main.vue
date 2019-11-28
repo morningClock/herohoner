@@ -70,7 +70,7 @@
           <span>{{name}}</span>
         </el-header>
         <el-main>
-          <router-view :key="$router.path"></router-view>
+          <router-view :key="$route.path"></router-view>
         </el-main>
       </el-container>
     </el-container>
