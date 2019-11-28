@@ -6,4 +6,7 @@ module.exports = app => {
     useUnifiedTopology: true,
     useFindAndModify: false
   })
+
+  // 解决相互引用时，找不到模型的问题
+  // const libs = require('require-all')(__dirname+ '/../models')
 }

@@ -15,6 +15,7 @@ app.use(express.json())
 
 // 引入admin接口,传入express对象
 require('./routes/admin')(app)
+require('./routes/web')(app)
 
 // 引入db
 require('./plugins/db')(app)

@@ -11,6 +11,10 @@ import router from './router'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 Vue.use(VueAwesomeSwiper, /* { default global options } */)
 
+// axios实例
+import http from './http/http'
+Vue.prototype.$http = http
+
 new Vue({
   router,
   render: h => h(App)

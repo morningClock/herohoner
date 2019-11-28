@@ -68,6 +68,17 @@ $size in $font-sizes {
   }
 }
 
+// 文本超出省略
+.text-ellipsis {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.text-nowrap {
+  white-space: nowrap;
+}
 /* 
   Flex布局
   移动端常用布局

@@ -42,10 +42,11 @@
       <!-- slot插入分类列表内容 -->
       <!-- 获取命名插槽items中传入的category属性数据 -->
       <template #items="{category}">
-        <div class="d-flex ai-center fs-lg pt-3" v-for="(news,index) of category.newList" :key="index">
-          <div>{{news.categoryName}}</div>
-          <div class="flex-1">{{news.title}}</div>
-          <div class="fs-sm">{{news.date}}</div>
+        <div class="d-flex ai-center fs-xl pt-4" v-for="(news,index) of category.newsList" :key="index">
+          <span class="text-nowrap text-blue-2">[{{news.categoryName}}]</span>
+          <span class="px-1">|</span>
+          <span class="flex-1 text-ellipsis">{{news.title}}</span>
+          <span class="text-nowrap fs-sm text-gray-1">{{news.updatedAt | date}}</span>
         </div>
       </template>
     </CardList>
@@ -68,11 +69,17 @@
 </template>
 
 <script>
+import dayjs from 'dayjs'
 import CardList from '../components/CardList'
 export default {
   name: 'home',
   components: {
     CardList
+  },
+  filters: {
+    date(val) {
+      return dayjs(val).format('MM/DD')
+    }
   },
   data() {
     return {
@@ -136,45 +143,19 @@ export default {
         }
         
       ],
-      newCats: [
-        {
-          name: '热门',
-          newList: new Array(5).fill(5).map(item => ({
-              categoryName: '公告',
-              title: '11月26不停机更新服务公告',
-              date: '11/06'
-          }))
-        }, {
-          name: '新闻',
-          newList: new Array(5).fill(5).map(item => ({
-              categoryName: '公告',
-              title: '11月26不停机更新服务公告',
-              date: '11/06'
-          }))
-        }, {
-          name: '公告',
-          newList: new Array(5).fill(5).map(item => ({
-              categoryName: '公告',
-              title: '11月26不停机更新服务公告',
-              date: '11/06'
-          }))
-        }, {
-          name: '活动',
-          newList: new Array(5).fill(5).map(item => ({
-              categoryName: '公告',
-              title: '11月26不停机更新服务公告',
-              date: '11/06'
-          }))
-        }, {
-          name: '赛事',
-          newList: new Array(5).fill(5).map(item => ({
-              categoryName: '公告',
-              title: '11月26不停机更新服务公告',
-              date: '11/06'
-          }))
-        }
-      ]
+      newCats: []
     }
+  },
+  methods: {
+    async getNewsCats () {
+      const res = await this.$http.get('news/list')
+      this.newCats = res.data
+      console.log(res.data)
+    }
+  },
+  created() {
+    // 获取数据
+    this.getNewsCats()
   },
 }
 </script>
