@@ -1,0 +1,44 @@
+{
+  "id": "1533252",
+  "name": "herohoner-web",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "586984",
+      "name": "more",
+      "font_class": "more",
+      "unicode": "e787",
+      "unicode_decimal": 59271
+    },
+    {
+      "icon_id": "1512541",
+      "name": "news_hot_light",
+      "font_class": "news_hot_light",
+      "unicode": "e7e7",
+      "unicode_decimal": 59367
+    },
+    {
+      "icon_id": "5345769",
+      "name": "video",
+      "font_class": "video",
+      "unicode": "e619",
+      "unicode_decimal": 58905
+    },
+    {
+      "icon_id": "6117392",
+      "name": "图文",
+      "font_class": "tuwen",
+      "unicode": "e6c2",
+      "unicode_decimal": 59074
+    },
+    {
+      "icon_id": "6654507",
+      "name": "card-hero",
+      "font_class": "card-hero",
+      "unicode": "e61f",
+      "unicode_decimal": 58911
+    }
+  ]
+}

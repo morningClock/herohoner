@@ -12,19 +12,19 @@
       </button>
     </div>
     <!-- 导航 -->
-    <div class="nav d-flex jc-around pt-3 pb-2 bg-primary fs-md">
+    <div class="nav nav-inverse pt-3 pb-2 fs-md jc-around">
       <div class="nav-item active">
-        <router-link to="/home" tag="div" class="nav-link text-white">首页</router-link>
+        <router-link to="/home" tag="div" class="nav-link">首页</router-link>
       </div>
       <div class="nav-item">
-        <router-link to="/about" tag="div" class="nav-link text-white">攻略中心</router-link>
+        <router-link to="/about" tag="div" class="nav-link">攻略中心</router-link>
       </div>
       <div class="nav-item">
-        <router-link to="/home" tag="div" class="nav-link text-white">客服中心</router-link>
+        <router-link to="/home" tag="div" class="nav-link">客服中心</router-link>
       </div>
     </div>
     <!-- 内容 -->
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
