@@ -217,13 +217,13 @@ $border-base-size: 1px;
   background: map-get($colors, 'white');
   .nav-item {
     margin-bottom: .25rem;
-    & .nav-link {
+    .nav-link {
       width: 100%;
       height: 100%;
       margin-bottom: .15rem;
       color: map-get($colors, 'drak');
     }
-    &.active .nav-link {
+    .nav-link.active {
       color: map-get($colors, 'primary');
       border-bottom: 3px solid map-get($colors, 'primary');
     }
@@ -232,10 +232,10 @@ $border-base-size: 1px;
   &.nav-inverse {
     background: map-get($colors, 'primary');
     .nav-item {
-      & .nav-link {
+      .nav-link {
         color: map-get($colors, 'white');
       }
-      &.active .nav-link {
+      .nav-link.active {
         border-bottom: 3px solid map-get($colors, 'white');
       }
     }

@@ -13,14 +13,14 @@
     </div>
     <!-- 导航 -->
     <div class="nav nav-inverse pt-3 pb-2 fs-md jc-around">
-      <div class="nav-item active">
+      <div class="nav-item">
         <router-link to="/home" tag="div" class="nav-link">首页</router-link>
       </div>
       <div class="nav-item">
         <router-link to="/about" tag="div" class="nav-link">攻略中心</router-link>
       </div>
       <div class="nav-item">
-        <router-link to="/home" tag="div" class="nav-link">客服中心</router-link>
+        <router-link to="/match" tag="div" class="nav-link">赛事中心</router-link>
       </div>
     </div>
     <!-- 内容 -->
@@ -29,5 +29,9 @@
 </template>
 
 <style>
-
+#header{
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
 </style>

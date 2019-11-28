@@ -8,10 +8,15 @@
     <div class="nav pt-3 pb-2 jc-between">
       <div
         class="nav-item"
-        :class="currentCard===index?'active': ''"
+       
         v-for="(item, index) of cardCategories"
         :key="index">
-        <div class="nav-link" @click="$refs.cardSwiper.swiper.slideTo(index)">{{item.name}}</div>
+        <div
+          class="nav-link" 
+          :class="currentCard===index?'active': ''"
+          @click="$refs.cardSwiper.swiper.slideTo(index)">
+          {{item.name}}
+        </div>
       </div>
     </div>
     <div class="card-body">
