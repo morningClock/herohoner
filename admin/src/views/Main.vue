@@ -61,7 +61,7 @@
             <i class="el-icon-setting" style="margin-right: 15px"></i>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item>
-                <template slot-scope="scope">
+                <template slot-scope="">
                   <span @click="logout">退出</span>
                 </template>
               </el-dropdown-item>
@@ -70,7 +70,7 @@
           <span>{{name}}</span>
         </el-header>
         <el-main>
-          <router-view></router-view>
+          <router-view :key="$router.path"></router-view>
         </el-main>
       </el-container>
     </el-container>
