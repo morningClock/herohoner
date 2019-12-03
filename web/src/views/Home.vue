@@ -51,20 +51,48 @@
       </template>
     </CardList>
     <!-- 新闻资讯 end -->
-    <p>1111</p>
-    <p>1111</p>
-    <p>1111</p>
-    <p>1111</p>
-    <p>1111</p>
-    <p>1111</p>
-    <p>1111</p>
-    <p>1111</p>
-    <p>1111</p>
-    <p>1111</p>
-    <p>1111</p>
-    <p>1111</p>
-    <p>1111</p>
-    <p>1111</p>
+
+    <!-- 英雄列表 start -->
+    <CardList
+      class="mt-3"
+      icon="iconnews_hot_light"
+      title="英雄列表"
+      :cardCategories="heroCats">
+      <!-- banner slot -->
+      <template v-slot:banner>
+        <img src="../assets/images/banner/herobanner.jpg" style="width:100%;max-height:120px;">
+      </template>
+      <!-- slot插入分类列表内容 -->
+      <!-- 获取命名插槽items中传入的category属性数据 -->
+      <template #items="{category}">
+        <div class="d-flex flex-wrap">
+          <div class="row-5 px-2" v-for="(hero,index) of category.heroList" :key="index">
+            <img :src="hero.avatar" alt="">
+            <div class="text-center">{{hero.name}}</div>
+          </div>
+        </div>
+      </template>
+    </CardList>
+    <!-- 英雄列表 end -->
+
+     <!-- 精彩视频 start -->
+    <CardList
+      class="mt-3"
+      icon="iconnews_hot_light"
+      title="精彩视频"
+      :cardCategories="newCats">
+      <!-- slot插入分类列表内容 -->
+      <!-- 获取命名插槽items中传入的category属性数据 -->
+      <template #items="{category}">
+        <div class="d-flex ai-center fs-xl pt-4" v-for="(news,index) of category.newsList" :key="index">
+          <span class="text-nowrap text-blue-2">[{{news.categoryName}}]</span>
+          <span class="px-1">|</span>
+          <span class="flex-1 text-ellipsis">{{news.title}}</span>
+          <span class="text-nowrap fs-sm text-gray-1">{{news.updatedAt | date}}</span>
+        </div>
+      </template>
+    </CardList>
+    <!-- 精彩视频 end -->
   </div>
 </template>
 
@@ -143,19 +171,25 @@ export default {
         }
         
       ],
-      newCats: []
+      newCats: [],
+      heroCats: []
     }
   },
   methods: {
     async getNewsCats () {
       const res = await this.$http.get('news/list')
       this.newCats = res.data
+    },
+    async getHeroesCats () {
+      const res = await this.$http.get('heroes/list')
+      this.heroCats = res.data
       console.log(res.data)
     }
   },
   created() {
     // 获取数据
     this.getNewsCats()
+    this.getHeroesCats()
   },
 }
 </script>

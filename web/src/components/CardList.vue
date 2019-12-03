@@ -5,6 +5,7 @@
       <h3 class="flex-1 pl-1 fs-xl">{{title}}</h3>
       <div class="iconfont iconmore"></div>
     </div>
+    <slot name="banner"></slot>
     <div class="nav pt-3 pb-2 jc-between">
       <div
         class="nav-item"
@@ -21,7 +22,7 @@
     </div>
     <div class="card-body">
       <!-- 插槽内容 -->
-      <swiper ref="cardSwiper" @slideChange="() => {currentCard = $refs.cardSwiper.swiper.activeIndex}">
+      <swiper ref="cardSwiper" :options="swiperOptions" @slideChange="() => {currentCard = $refs.cardSwiper.swiper.activeIndex}">
         <!-- 创建n个分类卡片 -->
         <swiper-slide v-for="(category, index) in cardCategories" :key="index">
           <!-- 命名插槽 -->
@@ -56,7 +57,10 @@ export default {
   },
   data() {
     return {
-      currentCard: 0
+      currentCard: 0,
+      swiperOptions: {
+        autoHeight: true
+      }
     }
   }
 }

@@ -8,9 +8,10 @@ module.exports = app => {
   // 获取数据库中的相关模型
   const Category = require('../../models/Category')
   const Article = require('../../models/Article')
+  const Hero = require('../../models/Hero')
   /**
    * GET /news/init
-   * [初始化数据库新闻相关数据]
+   * [导入初始化新闻相关数据]
    * @return 
    */
   router.get('/news/init', async (req, res) => {
@@ -23,7 +24,7 @@ module.exports = app => {
     const cats = await Category.find().where({
       parent: parent
     }).lean()
-    const newTitle = ["以数字之美探索文化 TGC腾讯数字文创节海南站即将开幕", "KPL限定皮肤爆料丨天狼星创始人，幕后老板即将登场", "腾讯游戏品牌全新升级：Spark More去发现，无限可能", "圣斗士联动！信物熔铸赢【圣斗士系列皮肤】", "张靓颖西施英雄主打歌翻唱大赛，参与活动打榜赢靓颖签名照！", "11月28日全服不停机更新公告", "11月28日体验服停机更新公告", "11月26日全服不停机更新公告", "11月22日体验服停机更新公告", "11月20日体验服不停机更新公告", "感恩节快乐 新英雄鲁班大师登场", "KPL限定皮肤天狼征服者全服6折特权开启！", "KPL限定天狼星计划系列皮肤——天狼征服者预定开启！", "感恩节活动周来袭 KPL限定皮肤天狼征服者预定即将开启", "张良-黄金白羊座登场 参与活动抽永久英雄", "王者荣耀城市赛：电竞赛事的另一种打开方式", "高校区域联赛校间积分赛第二场落幕，本周末六大赛区将再燃战火", "11月29日KPL秋季赛总决赛售票开启 购票福利惊喜大曝光", "王者高校赛区域联赛第二站，各地精彩不断！", "本周高校海选赛即将来临，你准备好了吗？"]
+    const newTitle = require('../../config/mock').newTitle
     const newsList = newTitle.map(title => {
       // 随机正负打乱
       const randomCats = cats.slice(0).sort(() => Math.random() - 0.5)
@@ -40,7 +41,7 @@ module.exports = app => {
   })
 
   /**
-   * GET /news/lisr
+   * GET /news/list
    * 获取所有新闻文章内容
    */
   router.get('/news/list', async (req,res) => {
@@ -84,6 +85,7 @@ module.exports = app => {
         }
       }
     ])
+    // 获取每个分类名称，用于catrgoryName的设置
     subCatsIDs = cats.map(category => category._id)
     // 增加热门分类
     // 此处必需用lean()，否则无法使用jsDOM方法来修改获得对象cats
@@ -110,7 +112,103 @@ module.exports = app => {
     res.send(cats)
   })
 
+  /**
+   * GET /news/init
+   * [导入初始化英雄相关数据]
+   * @return 
+   */
+  router.get('/heroes/init', async (req, res) => {
+    const parent = await Category.findOne({
+      name: '英雄分类'
+    })
+    
+    // 1.清空英雄分类子分类
+    await Category.deleteMany().where({parent:parent})
+    // 2.插入mock数据
+    heroesData = await require('../../config/mock').heroes
+    // 整理
+    heroesData.map(async (cat) => {
+      // 3.根据mock新建分类
+      const category = await Category.findOne({name: cat.categoryName, parent:parent})
+      // 如果不存在分类，插入新分类
+      if (!category) {
+        await Category.insertMany({
+          name: cat.categoryName,
+          parent: parent._id
+        })
+      }
+      const cats = await Category.find({
+        parent: parent
+      })
+      // 4.英雄数据处理
+      // 插入英雄数据
+      await Hero.deleteMany({})
+      // 此处坑了很久
+      // 注意async不使用时，增加了的话会导致数据格式错误。
+      // 返回对象中导致增加了 Promise{}
+      let heroList = cat.heroes.map(catHeroes => {
+        const randomCats = cats.slice(0).sort(()=>(Math.random()-0.5))
+        // 增加每个英雄所属分类（随机）
+        catHeroes.categories = randomCats.slice(0, 2)
+        return catHeroes
+      })
+      
+      await Hero.insertMany(heroList)
+    })
+    res.send(heroesData)
+    
+  })
 
+    /**
+   * GET /news/list
+   * 获取所有新闻文章内容
+   */
+  router.get('/heroes/list', async (req, res) => {
+    // 返回数据格式
+    // const heroCats = [
+    //   {
+    //     name: '坦克',
+    //     heroList: [
+    //       {
+    //         name: '廉颇',
+    //         avatar: ''
+    //       }
+    //     ]
+    //   }
+    // ]
+    
+    // 1.找到英雄分类下所有的子分类
+    const parent = await Category.findOne({name: '英雄分类'})
+    let cats = await Category.aggregate([
+      // 找出英雄分类所有子分类
+      {$match: {parent: parent._id}},
+      // 连接数组，查询子分类所有英雄
+      {
+        $lookup: {
+          // 查询的document
+          from: 'heroes',
+          localField: '_id',
+          // 找出字段
+          foreignField: 'categories',
+          // 查询结果放入heroList，并连接到每个分类
+          as: 'heroList'
+        }
+      },
+      {
+        $addFields: {
+          'heroList': {$slice:['$heroList', 20]}
+        }
+      }
+    ])
+    // 2.增加热门选项
+    const hotList = await Hero.find().populate('categories').limit(10)
+    cats.unshift({
+      name: '热门',
+      heroList: hotList
+    })
+    // 4.按照格式返回到前端
+    res.send(cats)
+  })
   // 导出接口
   app.use('/web/api',router)
 }
