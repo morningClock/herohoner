@@ -59,7 +59,9 @@ export default {
     return {
       currentCard: 0,
       swiperOptions: {
-        autoHeight: true
+        autoHeight: true,
+        observer:true,
+        observeParents:true
       }
     }
   }

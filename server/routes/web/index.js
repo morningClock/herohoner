@@ -118,16 +118,17 @@ module.exports = app => {
    * @return 
    */
   router.get('/heroes/init', async (req, res) => {
+    let heroList = []
     const parent = await Category.findOne({
       name: '英雄分类'
     })
-    
     // 1.清空英雄分类子分类
     await Category.deleteMany().where({parent:parent})
     // 2.插入mock数据
     heroesData = await require('../../config/mock').heroes
     // 整理
-    heroesData.map(async (cat) => {
+    // heroesData.map(async (cat) => {}
+    for(cat of heroesData) {
       // 3.根据mock新建分类
       const category = await Category.findOne({name: cat.categoryName, parent:parent})
       // 如果不存在分类，插入新分类
@@ -142,19 +143,30 @@ module.exports = app => {
       })
       // 4.英雄数据处理
       // 插入英雄数据
-      await Hero.deleteMany({})
-      // 此处坑了很久
-      // 注意async不使用时，增加了的话会导致数据格式错误。
-      // 返回对象中导致增加了 Promise{}
-      let heroList = cat.heroes.map(catHeroes => {
+      
+      // map是同步方法，map内默认没有使用Promise
+      // 所以返回的是Promise{<pedding>}
+      // 若要使用可以使用Promise.all包裹
+      let ret = cat.heroes.map(catHeroes => {
         const randomCats = cats.slice(0).sort(()=>(Math.random()-0.5))
         // 增加每个英雄所属分类（随机）
         catHeroes.categories = randomCats.slice(0, 2)
         return catHeroes
       })
-      
-      await Hero.insertMany(heroList)
-    })
+      heroList = heroList.concat(ret)
+    }
+    // 数组去重
+    let writeHeroList = []
+    let sign = {}
+    for(hero of heroList) {
+      // 如果不存在标记，就插入数组并标记
+      if(!sign[hero.name]) {
+        writeHeroList.push(hero)
+        sign[hero.name] = true
+      }
+    }
+    await Hero.deleteMany({})
+    await Hero.insertMany(writeHeroList)
     res.send(heroesData)
     
   })
@@ -206,7 +218,7 @@ module.exports = app => {
       name: '热门',
       heroList: hotList
     })
-    // 4.按照格式返回到前端
+    // 3.按照格式返回到前端
     res.send(cats)
   })
   // 导出接口

@@ -39,5 +39,5 @@ const schema = new mongoose.Schema({
   }]
 })
 
-// 参数3为Entity实体
+// 参数3为Collection集合名称
 module.exports = mongoose.model('Hero', schema, 'heroes')
