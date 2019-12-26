@@ -21,7 +21,12 @@
     <!-- nav-icons start -->
     <div class="nav-home bg-white mt-3 py-1 border-y-1">
       <div class="nav-icons d-flex flex-wrap">
-        <router-link tag="div" :to="item.to" class="nav-item my-2 pt-2 pb-1 border-r-1" v-for="(item,index) in navHomes" :key="index">
+        <router-link
+          tag="div"
+          :to="item.to"
+          class="nav-item my-2 pt-2 pb-1 border-r-1 pointer"
+          v-for="(item,index) in navHomes"
+          :key="index">
           <i :class="'sprite sprite-'+ item.icon"></i>
           <div class="pb-1">{{item.title}}</div>
         </router-link>
@@ -42,12 +47,17 @@
       <!-- slot插入分类列表内容 -->
       <!-- 获取命名插槽items中传入的category属性数据 -->
       <template #items="{category}">
-        <div class="d-flex ai-center fs-xl pt-4" v-for="(news,index) of category.newsList" :key="index">
+        <router-link
+          tag="div"
+          v-for="(news,index) of category.newsList"
+          :key="index"
+          :to="`articles/${news._id}`"
+          class="d-flex ai-center fs-xl pt-4 pointer">
           <span class="text-nowrap text-blue-2">[{{news.categoryName}}]</span>
           <span class="px-1">|</span>
           <span class="flex-1 text-ellipsis">{{news.title}}</span>
           <span class="text-nowrap fs-sm text-gray-1">{{news.updatedAt | date}}</span>
-        </div>
+        </router-link>
       </template>
     </CardList>
     <!-- 新闻资讯 end -->
@@ -66,7 +76,7 @@
       <!-- 获取命名插槽items中传入的category属性数据 -->
       <template #items="{category}">
         <div class="d-flex flex-wrap">
-          <div class="row-5 px-2" v-for="(hero,index) of category.heroList" :key="index">
+          <div class="row-5 px-2 pointer" v-for="(hero,index) of category.heroList" :key="index">
             <img :src="hero.avatar" alt="">
             <div class="text-center">{{hero.name}}</div>
           </div>

@@ -13,6 +13,13 @@
       "unicode_decimal": 59271
     },
     {
+      "icon_id": "837420",
+      "name": "arrow back",
+      "font_class": "arrowback",
+      "unicode": "e69c",
+      "unicode_decimal": 59036
+    },
+    {
       "icon_id": "1512541",
       "name": "news_hot_light",
       "font_class": "news_hot_light",

@@ -14,8 +14,19 @@ export default new Router({
       name: 'main',
       component: Main,
       children: [
-        {path:'home', component: Home},
-        {path:'about', component: () => import(/* webpackChunkName: "about" */ './views/About.vue')},
+        {
+          path:'home',
+          component: Home,
+        },
+        {
+          path:'about',
+          component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
+        },
+        {
+          path:'articles/:id',
+          component: () => import('./views/Article.vue'),
+          props: true
+        }
       ]
     }
   ]

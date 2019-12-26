@@ -42,7 +42,7 @@ module.exports = app => {
 
   /**
    * GET /news/list
-   * 获取所有新闻文章内容
+   * 获取所有新闻文章列表
    */
   router.get('/news/list', async (req,res) => {
     // 1.找出当前分类（热门、新闻、公告等之一）的分类
@@ -172,8 +172,8 @@ module.exports = app => {
   })
 
     /**
-   * GET /news/list
-   * 获取所有新闻文章内容
+   * GET /heroes/list
+   * 获取所有英雄的列表
    */
   router.get('/heroes/list', async (req, res) => {
     // 返回数据格式
@@ -221,6 +221,20 @@ module.exports = app => {
     // 3.按照格式返回到前端
     res.send(cats)
   })
+
+    /**
+   * GET /news/articles/:id
+   * 获取所有新闻文章详情内容
+   */
+   router.get('/articles/:id', async (req, res) => {
+     let article = await Article.findOne({'_id': req.params.id}).lean()
+     article.related = await Article.find().where({
+       categories: {$in: article.categories},
+       _id: {$ne: req.params.id}
+     }).limit(2).lean()
+     return res.send(article)
+   })
+
   // 导出接口
   app.use('/web/api',router)
 }
