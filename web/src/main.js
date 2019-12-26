@@ -3,6 +3,9 @@ import App from './App.vue'
 
 Vue.config.productionTip = false
 
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
 import './assets/sass/style.scss'
 import 'swiper/dist/css/swiper.css'
 import './assets/iconfont/iconfont.css'

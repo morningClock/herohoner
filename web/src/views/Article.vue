@@ -9,9 +9,10 @@
     </div>
     <!-- 内容 -->
     <div class="content px-3" >
-      <div v-html="model.content" class="border-b-1"></div>
+      <div v-if="model.content" v-html="model.content" class="text-drak fs-lg ql-editor article-detail border-b-1"></div>
+      <p v-else class="text-gray fs-xl pb-3 border-b-1">文章不小心弄丢了~~</p>
       <!-- 相关资讯 -->
-      <div class="pt-3 pb-5">
+      <div class="pt-3 pb-5 px-2">
         <h3 class="py-2">相关资讯</h3>
         <router-link
           v-for="item of model.related"
@@ -66,9 +67,16 @@ export default {
 </script>
 
 <style lang="scss">
-  .article {
+  .article-detail {
+    h1, h2 {
+      padding: 0;
+      margin: 0;
+      line-height: 1.75;
+      font-size: 1.3846rem;
+      font-weight: 500;
+    }
     p{
-      text-align: center;
+      line-height: 1.75;
     }
     img{
       width: 100%;
