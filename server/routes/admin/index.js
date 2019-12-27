@@ -128,7 +128,7 @@ module.exports = app => {
     const rules = {
       id: user._id
     }
-    const token = await jwt.sign(rules, keys.secret, { expiresIn: 60 * 60 })
+    const token = await jwt.sign(rules, keys.secret, { expiresIn: 60 * 60 * 24 })
     return res.status(200).send({token: token, 'name': user.username})
   })
 

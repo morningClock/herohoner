@@ -52,6 +52,7 @@ export default {
       // 获取详情
       const res = await this.$http.get(`rest/categories/${this.id}`)
       this.model = res.data
+      console.log(this.model)
     },
     async fetchParents () {
       const res = await this.$http.get(`rest/categories`)

@@ -5,6 +5,8 @@ const schema = new mongoose.Schema({
   name: { type: String },
   // 头像
   avatar: { type: String },
+  // 大图
+  banner: { type: String },
   // 称号
   title: { type: String },
   // 英雄分类
@@ -17,10 +19,11 @@ const schema = new mongoose.Schema({
     attack: { type: Number },
     survive: { type: Number }
   },
-  // 技能：每个技能的图标，名字，相关描述与应用技巧
+  // 技能：每个技能的图标，名字，消耗，相关描述与应用技巧
   skills: [{
     icon: { type: String },
     name: { type: String },
+    consume: { type: String },
     description: { type: String },
     tips: { type: String }
   }],
@@ -35,6 +38,7 @@ const schema = new mongoose.Schema({
   // 搭档
   partners: [{
     hero: { type: mongoose.SchemaTypes.ObjectId, ref:'Hero' },
+    relationship:{ type: String },
     description: { type: String }
   }]
 })
