@@ -76,10 +76,15 @@
       <!-- 获取命名插槽items中传入的category属性数据 -->
       <template #items="{category}">
         <div class="d-flex flex-wrap">
-          <div class="row-5 px-2 pointer" v-for="(hero,index) of category.heroList" :key="index">
+          <router-link
+            tag="div"
+            v-for="(hero,index) of category.heroList"
+            :key="index"
+            :to="`/heroDetail/${hero._id}`"
+            class="row-5 px-2 pointer">
             <img :src="hero.avatar" alt="">
             <div class="text-center">{{hero.name}}</div>
-          </div>
+          </router-link>
         </div>
       </template>
     </CardList>
@@ -204,7 +209,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import '../assets/sass/variable';
   .banner {
     height: 0;

@@ -13,21 +13,31 @@ export default new Router({
       path: '/',
       name: 'main',
       component: Main,
+      redirect: 'home',
       children: [
         {
-          path:'home',
+          path: 'home',
           component: Home,
         },
         {
-          path:'about',
+          path: 'about',
           component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
         },
         {
-          path:'articles/:id',
+          path: 'articles/:id',
           component: () => import('./views/Article.vue'),
           props: true
         }
       ]
+    },
+    {
+      path:'/heroDetail/:id',
+      component: () => import('./views/HeroDetail.vue'),
+      props: true
+    },
+    {
+      path: '*',
+      component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
     }
   ]
 })

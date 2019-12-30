@@ -9,6 +9,7 @@ module.exports = app => {
   const Category = require('../../models/Category')
   const Article = require('../../models/Article')
   const Hero = require('../../models/Hero')
+  const Item = require('../../models/Item')
   /**
    * GET /news/init
    * [导入初始化新闻相关数据]
@@ -222,9 +223,19 @@ module.exports = app => {
     res.send(cats)
   })
 
+  /**
+   * GET /news/heroes/:id
+   * 获取英雄详情内容
+   */
+  router.get('/heroes/:id', async (req,res) => {
+    const hero = await Hero.findOne({'_id': req.params.id}).populate(['categories','items1','items2','partners.hero'])
+    res.send(hero)
+  })
+
+
     /**
    * GET /news/articles/:id
-   * 获取所有新闻文章详情内容
+   * 获取新闻文章详情内容
    */
    router.get('/articles/:id', async (req, res) => {
      let article = await Article.findOne({'_id': req.params.id}).lean()
